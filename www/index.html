@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>GIR Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="content/jquery.mobile-1.1.0.min.css" rel="stylesheet" type="text/css">
+    <script src="scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="scripts/jquery.mobile-1.1.0.min.js" type="text/javascript"></script>
+    <script src="scripts/angular.js"></script>
+    <script src="scripts/angular-resource.js"></script>
+  </head>
+  <body>
+    <!-- Tell the app to use the Ctrl scope defined in our app.js -->
+    <div id="calculator" ng-app="" ng-controller="Ctrl" data-role="page" data-theme="a"
+      >
+      <header data-role="header">
+        <h1>Glucose Infuse Rate Calculator</h1>
+      </header>
+      <section data-role="content">
+        <div class="ui-grid-a">
+          <div class="ui-block-a"><label>Weight</label></div>
+          <div class="ui-block-b"><input id="txtWeight" ng-change="calculateGIR()"
+              ng-placeholder="Enter Number" style="text-align: right;" ng-model="weight"
+              type="double"></div>
+          <div class="ui-block-c"></div>
+          <div class="ui-block-a"><label>D5</label></div>
+          <div class="ui-block-b"><input ng-show="d10Rate == null" ng-change="calculateGIR()"
+              id="txtD5Rate" style="text-align: right;" ng-model="d5Rate" ng-placeholder="Enter Number"
+              type="double"></div>
+          <div class="ui-block-c"><label>ml/hr</label></div>
+          <div class="ui-block-a"><label>D10</label></div>
+          <div class="ui-block-b"><input ng-change="calculateGIR()" ng-show="d5Rate == null"
+              id="txtD10Rate" style="text-align: right;" ng-model="d10Rate" ng-placeholder="Enter Number"
+              type="double"></div>
+          <div class="ui-block-c">ml/hr</div>
+          <div class="ui-block-a"><label>D</label></div>
+          <div class="ui-block-b"><input ng-change="calculateGIR()" id="txtDRate"
+              style="text-align: right;" ng-model="dRate" ng-placeholder="Enter Number"
+              type="double"></div>
+          <div class="ui-block-a"><label>Rate</label></div>
+          <div class="ui-block-b"><input ng-change="calculateGIR()" id="txtRate"
+              style="text-align: right;" ng-model="drateRate" ng-placeholder="Enter Number"
+              type="decimal"></div>
+          <div class="ui-block-c">ml/hr</div>
+          <!-- Note the ng-model assignment. It's bound to the scope variable defined in app.js. -->
+          <div class="ui-block-a">
+            <p>Total GIR: {{(totalResult | number:2) || 'N/A'}}  mg/kg/min</p>
+          </div>
+          <!-- Not elegant but multiplying the values by one in the braces below
+            makes them evaluate as numbers instead of strings. Without it we would            end up with concatenation instead of addition -->
+          <div class="ui-block-b">
+            <p> <strong>Formula:</strong><br>
+              This calculation is a simple conversion of units (into mg/kg/min):
+              GIR = IV Rate (mL/hr) * Dextrose Conc (g/dL) * 1000 (mg/g) /
+              (divided by) Weight (kg) * 60 (min/hr) * 100 (mL/dL) where the
+              dextrose concentration is expressed as a whole number, e.g. 5 or
+              10. A GIR of 5-8 mg/kg/min is typical. Infants who are not feeding
+              should not be allowed a rate less than 5 mg/kg/min for any
+              significant period of time. The GIR needed to optimize nutrition
+              in neonates is 14 mg/kg/min </p>
+          </div>
+
+        </div>
+      </section>
+    </div>
+    <script src="scripts/hideAddressBar.js" type="text/javascript"></script>
+    <script src="scripts/app.js" type="text/javascript"></script>
+  </body>
+</html>
